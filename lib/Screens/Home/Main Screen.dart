@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:odc_project/Shared/Constants.dart';
 import 'package:odc_project/main.dart';
@@ -41,12 +42,18 @@ class MainScreen extends StatelessWidget {
           bottomNavigationBar: BottomNavigationBar(
             elevation: 10,
             items: const [
-              BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-              BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-              BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-              BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
+              BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.home), label: 'Home'),
+              BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.search), label: 'Search'),
+              BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.shoppingCart), label: 'Cart'),
+              BottomNavigationBarItem(icon: FaIcon(FontAwesomeIcons.userAlt), label: 'Profile'),
             ],
             currentIndex: cubit.currentIndex,
+            showUnselectedLabels: false,
+            iconSize: 22,
+            selectedLabelStyle: GoogleFonts.montserrat(
+              fontSize: 15.sp,
+              fontWeight: FontWeight.w600,
+            ),
             onTap: (index) => cubit.changeBottomNav(index),
           ),
         );
