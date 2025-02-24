@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "218682552235",
+    "project_id": "odc-project-81d18",
+    "storage_bucket": "odc-project-81d18.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:218682552235:android:bd4cd7f283a41196d32cee",
+        "android_client_info": {
+          "package_name": "com.example.odc_project"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUbFGjmm1O_FpI_y_BrGFTj6AgCjm7kHM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
