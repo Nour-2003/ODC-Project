@@ -10,6 +10,7 @@ import 'Cubit/Theme/Theme Cubit.dart';
 import 'Cubit/Theme/Theme States.dart';
 import 'Screens/Home/Main Screen.dart';
 import 'Screens/Home/OnBoarding Screen.dart';
+import 'Screens/Splash/Splash.dart';
 import 'Shared/Constants.dart';
 import 'Shared/Themes.dart';
 void main() async {
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
               themeMode: ThemeCubit.get(context).themebool
                   ? ThemeMode.dark
                   : ThemeMode.light,
-              home: isLoggedIn ? MainScreen() : OnBoardingScreen(),
+              home: isLoggedIn ? MainScreen() : SplashScreen(),
             ),
           );
         },

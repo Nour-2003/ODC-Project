@@ -15,7 +15,6 @@ class GetStarted extends StatelessWidget {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("Images/GetStarted.jpeg"),
-            // Ensure the image exists
             fit: BoxFit.cover,
           ),
         ),
@@ -23,7 +22,6 @@ class GetStarted extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.end,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Wrap only the text and button in a shadow container
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(20),
@@ -33,11 +31,8 @@ class GetStarted extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.black.withOpacity(0.0),
-                    // Fully transparent at the top
                     Colors.black.withOpacity(0.5),
-                    // Slightly visible in the middle
                     Colors.black.withOpacity(0.7),
-                    // More visible at the bottom
                   ],
                 ),
               ),

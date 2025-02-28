@@ -197,14 +197,11 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() {
                                     isLoading = true;
                                   });
-
                                   final credential = await FirebaseAuth.instance
                                       .signInWithEmailAndPassword(
                                     email: emailController.text,
                                     password: passwordController.text,
                                   );
-
-                                  // Save login state
                                   _saveLoginState(
                                     ThemeCubit
                                         .get(context)
@@ -212,11 +209,7 @@ class _LoginPageState extends State<LoginPage> {
                                     emailController.text,
                                     passwordController.text,
                                   );
-
-
                                   ShopCubit.get(context).initializeData();
-
-                                  // Navigate to main screen
                                   Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(

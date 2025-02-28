@@ -80,7 +80,6 @@ class ProfileScreen extends StatelessWidget {
                     padding: const EdgeInsets.all(20),
                     child: Column(
                       children: [
-                        // Phone Number
                         _buildDetailTile(
                           icon: Icons.phone,
                           title: 'Phone',
@@ -88,7 +87,6 @@ class ProfileScreen extends StatelessWidget {
                           iconColor: Colors.blue,
                         ),
                          Divider(height: 3.w, thickness: 1),
-                        // Email
                         _buildDetailTile(
                           icon: Icons.email,
                           title: 'Email',

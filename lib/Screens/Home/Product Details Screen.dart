@@ -21,7 +21,6 @@ class ProductDetails extends StatefulWidget {
   final String rating;
   final String reviews;
   late String category;
-  final String role;
 
   ProductDetails({
     required this.productId,
@@ -32,7 +31,6 @@ class ProductDetails extends StatefulWidget {
     required this.rating,
     required this.reviews,
     required this.category,
-    required this.role,
     Key? key,
   }) : super(key: key);
 
@@ -396,150 +394,169 @@ Widget SimilarProducts(cubit, category, title) {
                 (product['category'] == category && product['title'] != title))
             .toList();
         final product = filteredProducts[index];
-        return Container(
-          width: 240,
-          margin: EdgeInsets.symmetric(horizontal: 2.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Stack(
-                  children: [
-                    Container(
-                      width: double.infinity,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: CachedNetworkImage(
-                        imageUrl: product['imageUrl'],
-                        fit: BoxFit.contain,
-                        placeholder: (context, url) => Center(
-                          child: SpinKitCircle(
-                            color: defaultcolor,
-                            size: 50,
-                          ),
-                        ),
-                        errorWidget: (context, url, error) => Center(
-                          child: Image.asset(
-                            "Images/placeholder.png",
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Positioned.fill(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Colors.transparent,
-                              Colors.black.withOpacity(0.2), // Dark overlay
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+        return GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ProductDetails(
+                  productId: product.id,
+                  title: product['title'],
+                  imageUrl: product['imageUrl'],
+                  description: product['description'],
+                  price: product['price'],
+                  rating: product['rating'],
+                  reviews: product['count'],
+                  category: product['category'],
                 ),
               ),
-              Material(
-                borderRadius: const BorderRadius.only(
-                  bottomLeft: Radius.circular(15),
-                  bottomRight: Radius.circular(15),
-                ),
-                color: ThemeCubit.get(context).themebool
-                    ? Colors.black
-                    : Colors.white,
-                elevation: 5, // Shadow
-                child: Padding(
-                  padding: EdgeInsets.all(2.w),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            );
+          },
+          child: Container(
+            width: 240,
+            margin: EdgeInsets.symmetric(horizontal: 2.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
+                  child: Stack(
                     children: [
-                      Text(
-                        product['title'],
-                        maxLines: 2,
-                        style: GoogleFonts.montserrat(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.bold,
-                          height: 1.2,
+                      Container(
+                        width: double.infinity,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: 1.h),
-                      Text(
-                        product['description'],
-                        maxLines: 2,
-                        style: GoogleFonts.montserrat(
-                          fontSize: 13.sp,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.grey[600],
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                      SizedBox(height: 1.h),
-                      Text(
-                        '\$${product['price']}',
-                        style: GoogleFonts.montserrat(
-                          fontSize: 15.sp,
-                          fontWeight: FontWeight.bold,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      SizedBox(height: 1.h),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 4),
-                              decoration: BoxDecoration(
-                                color: Colors.amber.withOpacity(0.1),
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Row(
-                                children: [
-                                  Row(
-                                    children: List.generate(
-                                      5,
-                                      (starIndex) => Icon(
-                                        starIndex <
-                                                double.parse(product[
-                                                    'rating']) // Dynamic rating
-                                            ? Icons.star_rounded
-                                            : Icons.star_outline_rounded,
-                                        color: Colors.amber,
-                                        size: 17.sp,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: 1.w),
-                                  Text(
-                                    "${product['rating']}",
-                                    style: GoogleFonts.montserrat(
-                                      fontSize: 14.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.amber[800],
-                                    ),
-                                  ),
-                                ],
-                              ),
+                        child: CachedNetworkImage(
+                          imageUrl: product['imageUrl'],
+                          fit: BoxFit.contain,
+                          placeholder: (context, url) => Center(
+                            child: SpinKitCircle(
+                              color: defaultcolor,
+                              size: 50,
                             ),
-                          ],
+                          ),
+                          errorWidget: (context, url, error) => Center(
+                            child: Image.asset(
+                              "Images/placeholder.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Positioned.fill(
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.transparent,
+                                Colors.black.withOpacity(0.2), // Dark overlay
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
-            ],
+                Material(
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(15),
+                    bottomRight: Radius.circular(15),
+                  ),
+                  color: ThemeCubit.get(context).themebool
+                      ? Colors.black
+                      : Colors.white,
+                  elevation: 5, // Shadow
+                  child: Padding(
+                    padding: EdgeInsets.all(2.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text(
+                          product['title'],
+                          maxLines: 2,
+                          style: GoogleFonts.montserrat(
+                            fontSize: 14.sp,
+                            fontWeight: FontWeight.bold,
+                            height: 1.2,
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 1.h),
+                        Text(
+                          product['description'],
+                          maxLines: 2,
+                          style: GoogleFonts.montserrat(
+                            fontSize: 13.sp,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey[600],
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 1.h),
+                        Text(
+                          '\$${product['price']}',
+                          style: GoogleFonts.montserrat(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        SizedBox(height: 1.h),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 4),
+                                decoration: BoxDecoration(
+                                  color: Colors.amber.withOpacity(0.1),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Row(
+                                  children: [
+                                    Row(
+                                      children: List.generate(
+                                        5,
+                                        (starIndex) => Icon(
+                                          starIndex <
+                                                  double.parse(product[
+                                                      'rating']) // Dynamic rating
+                                              ? Icons.star_rounded
+                                              : Icons.star_outline_rounded,
+                                          color: Colors.amber,
+                                          size: 17.sp,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 1.w),
+                                    Text(
+                                      "${product['rating']}",
+                                      style: GoogleFonts.montserrat(
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.amber[800],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },

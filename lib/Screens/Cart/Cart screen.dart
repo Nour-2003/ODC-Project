@@ -7,7 +7,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:odc_project/Shared/Constants.dart';
-import 'package:odc_project/main.dart';
 import 'package:sizer/sizer.dart';
 import '../../Cubit/Shop/Shop Cubit.dart';
 import '../../Cubit/Shop/Shop States.dart';

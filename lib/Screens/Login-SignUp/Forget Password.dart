@@ -3,16 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:odc_project/Cubit/Shop/Shop%20Cubit.dart';
-import 'package:odc_project/Screens/Login-SignUp/Get%20Started.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import '../../Cubit/Login/Login Cubit.dart';
 import '../../Cubit/Login/Login States.dart';
 import '../../Cubit/Theme/Theme Cubit.dart';
 import '../../Shared/Constants.dart';
-import '../Home/Main Screen.dart';
-import 'Register Screen.dart';
 
 class ForgetPassword extends StatefulWidget {
   @override
@@ -71,7 +66,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               style: GoogleFonts.montserrat(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.red, // Red color for the asterisk
+                                color: Colors.red,
                               ),
                             ),
                             TextSpan(
@@ -79,7 +74,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               style: GoogleFonts.montserrat(
                                 fontSize: 16.sp,
                                 fontWeight: FontWeight.w400,
-                                color: Colors.black, // Default text color
+                                color: Colors.black,
                               ),
                             ),
                           ],

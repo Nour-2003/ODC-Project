@@ -1,7 +1,5 @@
 import 'package:animate_do/animate_do.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -60,9 +58,9 @@ class HomePage extends StatelessWidget {
                     child: ConditionalBuilder(
                       condition: categories.isNotEmpty,
                       fallback: (context) => Center(
-                        child: CircularProgressIndicator(
+                        child: SpinKitCircle(
                           color: defaultcolor,
-                        ),
+                        )
                       ),
                       builder: (context) {
                         return Container(
@@ -84,19 +82,15 @@ class HomePage extends StatelessWidget {
                                   PageRouteBuilder(
                                     pageBuilder: (context, animation, secondaryAnimation) =>
                                         CategoryScreen(
-                                          role: cubit.userData?['role'],
                                           categoryName: categories[index]['name'],
-                                          id: categories[index].id,
                                         ),
                                     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                                      const begin = Offset(1.0, 0.0); // Start from right
-                                      const end = Offset.zero; // End at the current position
-                                      const curve = Curves.easeInOut; // Smooth curve
-
+                                      const begin = Offset(1.0, 0.0);
+                                      const end = Offset.zero;
+                                      const curve = Curves.easeInOut;
                                       var tween = Tween(begin: begin, end: end)
                                           .chain(CurveTween(curve: curve));
                                       var offsetAnimation = animation.drive(tween);
-
                                       return SlideTransition(
                                         position: offsetAnimation,
                                         child: child,
@@ -115,8 +109,8 @@ class HomePage extends StatelessWidget {
                                     child: CachedNetworkImage(
                                       imageUrl: categories[index]['imageUrl'],
                                       fit: BoxFit.cover,
-                                      width: 22.w, // Responsive width (15% of screen width)
-                                      height: 22.w, // Responsive height (same as width for a square)
+                                      width: 22.w,
+                                      height: 22.w,
                                       placeholder: (context, url) => Center(
                                         child: SpinKitCircle(
                                           color: defaultcolor,
@@ -178,7 +172,7 @@ class HomePage extends StatelessWidget {
 Widget ProductsListBuilder(data, cubit) => ConditionalBuilder(
       condition: data.isNotEmpty,
       fallback: (context) => Center(
-        child: CircularProgressIndicator(
+        child: SpinKitCircle(
           color: defaultcolor,
         ),
       ),
@@ -203,9 +197,8 @@ Widget ProductsListBuilder(data, cubit) => ConditionalBuilder(
                       context,
                       MaterialPageRoute(
                         builder: (context) => BlocProvider.value(
-                          value: BlocProvider.of<ShopCubit>(context), // Pass the same instance
+                          value: BlocProvider.of<ShopCubit>(context),
                           child: ProductDetails(
-                            role: role,
                             productId: data[index].id,
                             title: data[index]['title'],
                             imageUrl: data[index]['imageUrl'],

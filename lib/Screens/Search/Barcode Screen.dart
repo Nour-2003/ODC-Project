@@ -13,8 +13,7 @@ import '../../Shared/Constants.dart';
 import '../Home/Product Details Screen.dart';
 
 class BarcodeScreen extends StatefulWidget {
-  const BarcodeScreen({super.key,required this.role});
-  final String role;
+  const BarcodeScreen({super.key});
   @override
   State<BarcodeScreen> createState() => _BarcodeScreenState();
 }
@@ -46,24 +45,22 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
               ),),
               backgroundColor: defaultcolor,
               actions: [
-                // Torch Toggle Button
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      isTorchOn = !isTorchOn; // Toggle torch state
-                      controller.toggleTorch(); // Add your torch toggle logic here
+                      isTorchOn = !isTorchOn;
+                      controller.toggleTorch();
                     });
                   },
                   iconSize: 30,
                   color: Colors.white,
                   icon: Icon(isTorchOn ? Icons.flash_on : Icons.flash_off),
                 ),
-                // Camera Toggle Button
                 IconButton(
                   onPressed: () {
                     setState(() {
-                      isFrontCamera = !isFrontCamera; // Toggle camera state
-                      controller.switchCamera(); // Add your camera toggle logic here
+                      isFrontCamera = !isFrontCamera;
+                      controller.switchCamera();
                     });
                   },
                   iconSize: 30,
@@ -103,19 +100,14 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
                                 rating: productData?['rating'] ?? '',
                                 reviews: productData?['reviews'] ?? '',
                                 category: productData?['category'] ?? '',
-                                role: widget.role, // Pass the role based on the current user
                               ),
                             ),
                           );
                         } else {
                           debugPrint("No product found for barcode: $code");
-                          // Handle no product found (e.g., show an alert dialog)
-                          // Show an appropriate message to the user
                         }
                       } catch (e) {
                         debugPrint("Error retrieving product: $e");
-                        // Handle errors (e.g., network or permission issues)
-                        // Show an error message to the user
                       }
                     }
                   }
@@ -135,7 +127,7 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
 class FoundCodeScreen extends StatefulWidget {
   final String value;
   final Function() screenClosed;
-  final Map<String, dynamic>? productData; // Accept the product data
+  final Map<String, dynamic>? productData;
 
   const FoundCodeScreen({
     Key? key,

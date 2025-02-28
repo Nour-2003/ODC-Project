@@ -8,7 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:odc_project/Shared/Constants.dart';
-import 'package:odc_project/main.dart';
+
 import 'package:sizer/sizer.dart';
 
 import '../../Cubit/Theme/Theme Cubit.dart';
