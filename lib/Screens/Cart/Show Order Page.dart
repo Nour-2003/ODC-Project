@@ -36,63 +36,95 @@ class ShowOrderPage extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 16),
         child: Padding(
           padding: const EdgeInsets.all(12),
-          child: Row(
+          child: Column(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: CachedNetworkImage(
-                  imageUrl:
-                    item['imageUrl'] ?? '',
-                    width: 10.h,
-                    height: 10.h,
-                    fit: BoxFit.contain,
-                  placeholder: (context, url) => SpinKitCircle(
-                    color: defaultcolor,
-                    size: 30,
+              Row(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: CachedNetworkImage(
+                      imageUrl:
+                        item['imageUrl'] ?? '',
+                        width: 12.h,
+                        height: 12.h,
+                        fit: BoxFit.contain,
+                      placeholder: (context, url) => SpinKitCircle(
+                        color: defaultcolor,
+                        size: 30,
+                      ),
+                    ),
                   ),
-                ),
+                  SizedBox(width: 2.w),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          item['title'] ?? '',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: GoogleFonts.montserrat(
+                            fontSize: 15.sp,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(height: 2.5.h),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          alignment: Alignment.center,
+                          width: 23.w,
+                          height: 5.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(
+                              color: Colors.grey,
+                              width: 1,
+                            ),
+                          ),
+                          child: Text(
+                            '\$${price.toStringAsFixed(2)}',
+                            style: GoogleFonts.montserrat(
+                              fontSize: 17.sp,
+                              fontWeight: FontWeight.bold
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      item['title'] ?? '',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.montserrat(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    SizedBox(height: 1.h),
-                    Text(
-                      '\$${price.toStringAsFixed(2)}',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 15.sp,
-                        fontWeight: FontWeight.bold
-                      ),
-                    ),
-                    SizedBox(height: 1.h),
-                    Text(
-                      'Quantity: $quantity',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 14.sp,
-                      ),
-                    ),
-                     SizedBox(height: 1.h),
-                    Text(
-                      'Subtotal: \$${total.toStringAsFixed(2)}',
-                      style: GoogleFonts.montserrat(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
-                      ),
-                    ),
-                  ],
-                ),
+              SizedBox(height: 1.h),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Divider(
+                thickness: 1,
               ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Total Order ($quantity) :',
+                    style: GoogleFonts.montserrat(
+                      fontSize: 14.sp,
+                    ),
+                  ),
+                  Text(
+                    '\$${total.toStringAsFixed(2)}',
+                    style: GoogleFonts.montserrat(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            )
             ],
           ),
         ),
@@ -111,7 +143,6 @@ class ShowOrderPage extends StatelessWidget {
         'timestamp': FieldValue.serverTimestamp(),
       });
 
-      // Add the generated order ID to each item for reference
       for (var item in orderItems) {
         item['orderId'] = newOrder.id;
       }
@@ -124,11 +155,10 @@ class ShowOrderPage extends StatelessWidget {
         final orderQuantity = item['quantity'];
         print("Processing item: $itemName, Quantity: $orderQuantity");
 
-        // Search for the item in the inventory
         final querySnapshot = await inventoryRef.where('name', isEqualTo: itemName).get();
         if (querySnapshot.docs.isNotEmpty) {
           print("Item exists in inventory. Updating quantity.");
-          // Item exists, update its quantity
+
           final docRef = querySnapshot.docs.first.reference;
           await docRef.update({
             'quantity': FieldValue.increment(orderQuantity),
@@ -136,16 +166,15 @@ class ShowOrderPage extends StatelessWidget {
           print("Updated inventory for $itemName with quantity -$orderQuantity");
         } else {
           print("Item does not exist in inventory. Adding new item.");
-          // Item does not exist, add a new document
+
           await inventoryRef.add({
             'name': itemName,
-            'quantity': orderQuantity, // Start with the negative quantity for the order
+            'quantity': orderQuantity,
           });
           print("Added new inventory item: $itemName with quantity -$orderQuantity");
         }
       }
 
-      // Manage Cart updates
       final cartRef = FirebaseFirestore.instance.collection('Cart');
       final batch = FirebaseFirestore.instance.batch();
 
@@ -158,7 +187,7 @@ class ShowOrderPage extends StatelessWidget {
 
       await batch.commit();
       print("Cart updates committed.");
-
+      LocalNotification.showBasicNotification();
       if (context.mounted) {
       AwesomeDialog(
         context: context,
@@ -296,7 +325,6 @@ class ShowOrderPage extends StatelessWidget {
                 }
 
                 try {
-                  // Check if order items are available
                   if (orderItems.isEmpty || orderItems[0]['orderId'] == null) {
                     AwesomeDialog(
                       context: context,
@@ -327,14 +355,9 @@ class ShowOrderPage extends StatelessWidget {
                   }
 
                   final String orderId = orderItems[0]['orderId'];
-
-                  // Reference to the specific order document in Firestore
                   final orderRef = FirebaseFirestore.instance.collection('Orders').doc(orderId);
-
-                  // Update the rating field for the specific order
                   await orderRef.update({'rating': userRating});
 
-                  // Show success dialog
                   AwesomeDialog(
                     context: context,
                     dialogType: DialogType.success,
@@ -364,7 +387,6 @@ class ShowOrderPage extends StatelessWidget {
                     },
                   ).show();
                 } catch (e) {
-                  // Handle Firestore update errors
                   AwesomeDialog(
                     context: context,
                     dialogType: DialogType.error,
@@ -422,30 +444,66 @@ class ShowOrderPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Total:',
+                  'Order:',
                   style: GoogleFonts.montserrat(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                    fontSize: 19.sp,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
                   '\$${orderTotal.toStringAsFixed(2)}',
                   style: GoogleFonts.montserrat(
-                    fontSize: 20,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 16),
+
+            SizedBox(height: 1.5.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Shipping",style: GoogleFonts.montserrat(
+                  color: ThemeCubit.get(context).themebool ?Colors.white:Colors.black,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.w600,
+                ),),
+                Text(orderTotal > 2000 ? "Free" : "\$100",style: GoogleFonts.montserrat(
+                  color: ThemeCubit.get(context).themebool ?Colors.white:Colors.black,
+                  fontSize: 18.sp,
+                  fontWeight: FontWeight.bold,
+                ),),
+              ],
+            ),
+            SizedBox(height: 1.5.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Total:',
+                  style: GoogleFonts.montserrat(
+                    fontSize: 19.sp,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                Text(
+                  '\$${(orderTotal + (orderTotal > 2000 ? 0 : 100)).toStringAsFixed(2)}',
+                  style: GoogleFonts.montserrat(
+                    fontSize: 18.sp,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 1.h),
             ElevatedButton(
               onPressed: () => _submitOrder(context),
               style: ElevatedButton.styleFrom(
                 minimumSize: const Size.fromHeight(50),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(25),
                 ),
               ),
               child: Text(
@@ -463,7 +521,7 @@ class ShowOrderPage extends StatelessWidget {
                 minimumSize: const Size.fromHeight(50),
                 foregroundColor: Colors.white,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+                  borderRadius: BorderRadius.circular(25),
                 ),
               ),
               child: Text(
@@ -496,7 +554,7 @@ class ShowOrderPage extends StatelessWidget {
             bottomRight: Radius.circular(20),
           ),
         ),
-        title: Text('Order Summary',style: GoogleFonts.montserrat(
+        title: Text('Checkout',style: GoogleFonts.montserrat(
           color: Colors.white,
           fontSize: 22.0,
           fontWeight: FontWeight.bold,

@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:sizer/sizer.dart';
 import '../../Cubit/Shop/Shop Cubit.dart';
 import '../../Cubit/Shop/Shop States.dart';
 import '../../Shared/Constants.dart';
@@ -28,13 +30,20 @@ class _BarcodeScreenState extends State<BarcodeScreen> {
       builder: (context,state){
         return Scaffold(
             appBar: AppBar(
+              iconTheme: IconThemeData(
+                color: Colors.white,
+              ),
               elevation: 10,
               centerTitle: true,
               systemOverlayStyle: SystemUiOverlayStyle(
                 statusBarColor: Colors.white,
                 statusBarIconBrightness: Brightness.dark,
               ),
-              title: const Text('Barcode Search'),
+              title:Text('Barcode Search',style: GoogleFonts.montserrat(
+                color: Colors.white,
+                fontSize: 18.sp,
+                fontWeight: FontWeight.bold,
+              ),),
               backgroundColor: defaultcolor,
               actions: [
                 // Torch Toggle Button

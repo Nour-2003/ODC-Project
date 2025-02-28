@@ -66,14 +66,14 @@ class HomePage extends StatelessWidget {
                       ),
                       builder: (context) {
                         return Container(
-                          padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h), // Responsive padding
+                          padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.6.h), // Responsive padding
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
                             color: ThemeCubit.get(context).themebool
                                 ? Colors.grey.withOpacity(0.1)
                                 : Colors.white,
                           ),
-                          height: 17.h, // Fixed height (17% of screen height)
+                          height: 20.h,
                           child: ListView.separated(
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
@@ -131,14 +131,14 @@ class HomePage extends StatelessWidget {
                                       ),
                                     ),
                                   ),
-                                  SizedBox(height: 1.h), // Responsive spacing
+                                  SizedBox(height: 2.h), // Responsive spacing
                                   // Category Name
                                   Text(
                                     categories[index]['name'],
                                     overflow: TextOverflow.ellipsis,
                                     style: GoogleFonts.montserrat(
                                       fontSize: 13.sp, // Responsive font size
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight.w900,
                                     ),
                                   ),
                                 ],
@@ -151,7 +151,7 @@ class HomePage extends StatelessWidget {
                       },
                     ),
                   ),
-                  const SizedBox(height: 25),
+                   SizedBox(height: 2.h),
                   FadeInUp(
                     duration: const Duration(milliseconds: 500),
                     child: Padding(
@@ -161,7 +161,7 @@ class HomePage extends StatelessWidget {
                               fontSize: 25, fontWeight: FontWeight.bold)),
                     ),
                   ),
-                  SizedBox(height: 3.h),
+                  SizedBox(height: 2.h),
                   FadeInUp(
                       duration: const Duration(milliseconds: 500),
                       child: ProductsListBuilder(data, cubit)),

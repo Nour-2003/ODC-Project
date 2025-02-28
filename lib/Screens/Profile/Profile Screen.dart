@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:odc_project/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 
@@ -176,30 +175,51 @@ class ProfileScreen extends StatelessWidget {
     );
   }
 
-  // Helper method to build a detail tile
   Widget _buildDetailTile({
     required IconData icon,
     required String title,
     required String value,
     required Color iconColor,
   }) {
-    return ListTile(
-      leading: Icon(icon, color: iconColor),
-      title: Text(
-        title,
-        style: GoogleFonts.montserrat(
-          fontSize: 15.sp,
-          fontWeight: FontWeight.w600,
-          color: Colors.grey[600],
-        ),
-      ),
-      trailing: Text(
-        value,
-        style: GoogleFonts.montserrat(
-          fontSize: 15.sp,
-          fontWeight: FontWeight.bold,
-        ),
+    return Padding(
+      padding:  EdgeInsets.symmetric(vertical: 1.3.h),
+      child: Row(
+        children: [
+
+          SizedBox(
+            width: 50,
+            child: Icon(
+              icon,
+              color: iconColor,
+              size: 28,
+            ),
+          ),
+          Expanded(
+            child: Text(
+              title,
+              style: GoogleFonts.montserrat(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.w600,
+                color: Colors.grey[600],
+              ),
+            ),
+          ),
+          SizedBox(width: 8), // Spacing between title and value
+          Flexible(
+            child: Text(
+              value,
+              style: GoogleFonts.montserrat(
+                fontSize: 15.sp,
+                fontWeight: FontWeight.bold,
+              ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              textAlign: TextAlign.right,
+            ),
+          ),
+        ],
       ),
     );
   }
+
 }

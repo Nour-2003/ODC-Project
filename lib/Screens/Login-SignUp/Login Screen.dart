@@ -13,6 +13,7 @@ import '../../Cubit/Login/Login States.dart';
 import '../../Cubit/Theme/Theme Cubit.dart';
 import '../../Shared/Constants.dart';
 import '../Home/Main Screen.dart';
+import 'Forget Password.dart';
 import 'Register Screen.dart';
 
 class LoginPage extends StatefulWidget {
@@ -174,84 +175,10 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             TextButton(
                               onPressed: () async {
-                                if (emailController.text.isEmpty) {
-                                  AwesomeDialog(
-                                    context: context,
-                                    dialogType: DialogType.error,
-                                    title: 'Forget Password',
-                                    titleTextStyle: GoogleFonts
-                                        .montserrat(
-                                      fontSize: 20,
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      color: ThemeCubit.get(context).themebool ? Colors.white:Colors.black,
-                                    ),
-                                    descTextStyle:GoogleFonts
-                                        .montserrat(
-                                      fontSize: 17,
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      color: ThemeCubit.get(context).themebool ? Colors.white:Colors.black,
-                                    ) ,
-                                    dialogBackgroundColor: ThemeCubit.get(context).themebool ? Colors.grey[800]:Colors.white,
-                                    desc: 'Please enter your email to reset your password',
-                                  ).show();
-                                  return;
-                                }
-                                try {
-                                  await FirebaseAuth.instance.sendPasswordResetEmail(
-                                    email: emailController.text,
-                                  );
-                                  AwesomeDialog(
-                                    context: context,
-                                    dialogType: DialogType.success,
-                                    title: 'Forget Password',
-                                    titleTextStyle: GoogleFonts
-                                        .montserrat(
-                                      fontSize: 20,
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      color: ThemeCubit.get(context).themebool ? Colors.white:Colors.black,
-                                    ),
-                                    descTextStyle:GoogleFonts
-                                        .montserrat(
-                                      fontSize: 17,
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      color: ThemeCubit.get(context).themebool ? Colors.white:Colors.black,
-                                    ) ,
-                                    dialogBackgroundColor: ThemeCubit.get(context).themebool ? Colors.grey[800]:Colors.white,
-                                    desc: 'Check your email to reset your password',
-                                  ).show();
-                                } catch (e) {
-                                  AwesomeDialog(
-                                    context: context,
-                                    dialogType: DialogType.error,
-                                    title: 'Forget Password',
-                                    titleTextStyle: GoogleFonts
-                                        .montserrat(
-                                      fontSize: 20,
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      color: ThemeCubit.get(context).themebool ? Colors.white:Colors.black,
-                                    ),
-                                    descTextStyle:GoogleFonts
-                                        .montserrat(
-                                      fontSize: 17,
-                                      fontWeight:
-                                      FontWeight
-                                          .bold,
-                                      color: ThemeCubit.get(context).themebool ? Colors.white:Colors.black,
-                                    ) ,
-                                    dialogBackgroundColor: ThemeCubit.get(context).themebool ? Colors.grey[800]:Colors.white,
-                                    desc: 'Please enter a valid email',
-                                  ).show();
-                                }
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(builder: (context) => ForgetPassword()),
+                                );
                               },
                               child:  Text(
                                 'Forget Password?',

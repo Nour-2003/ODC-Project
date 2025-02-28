@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'Cubit/Shop/Shop Cubit.dart';
@@ -13,6 +14,8 @@ import 'Shared/Constants.dart';
 import 'Shared/Themes.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await LocalNotification.init();
+  await _requestNotificationPermissions();
   await Firebase.initializeApp();
   Bloc.observer = MyBlocObserver();
 
@@ -70,5 +73,11 @@ class MyApp extends StatelessWidget {
         },
       ),
     );
+  }
+}
+Future<void> _requestNotificationPermissions() async {
+  final status = await Permission.notification.request();
+  if (status.isDenied) {
+    print('Notification permission denied');
   }
 }

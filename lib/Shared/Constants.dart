@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MyBlocObserver extends BlocObserver {
@@ -148,3 +149,57 @@ Widget defaultTextFormField({
     );
 
 Color defaultcolor = Color(0xFFF83758);
+class LocalNotification {
+  static final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+
+  static Future<void> init() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+    AndroidInitializationSettings('@mipmap/ic_launcher');
+
+    const DarwinInitializationSettings initializationSettingsIOS =
+    DarwinInitializationSettings();
+
+    const InitializationSettings initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+      },
+    );
+  }
+
+  static Future<void> showBasicNotification() async {
+    print('Attempting to show notification'); // Debug log
+    const AndroidNotificationDetails androidPlatformChannelSpecifics =
+    AndroidNotificationDetails(
+      'channel_id',
+      'channel_name',
+      importance: Importance.max,
+      priority: Priority.high,
+      showWhen: false,
+      channelDescription: 'Channel description',
+      enableVibration: true,
+      playSound: true,
+    );
+
+    const NotificationDetails platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+    );
+
+    try {
+      await flutterLocalNotificationsPlugin.show(
+        0,
+        'Order Status',
+        'Your order has been Shipped successfully',
+        platformChannelSpecifics,
+      );
+      print('Notification shown successfully');
+    } catch (e) {
+      print('Error showing notification: $e');
+    }
+  }
+}

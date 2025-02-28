@@ -78,7 +78,6 @@ class _ProductDetailsState extends State<ProductDetails> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Enhanced Image Section
                 Container(
                   height: 300,
                   width: double.infinity,
@@ -145,7 +144,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Title and Price Section
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -180,7 +178,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                           ),
                         ],
                       ),
-
                       SizedBox(height: 1.3.h),
                       Container(
                         padding: const EdgeInsets.symmetric(
@@ -319,7 +316,6 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   title: 'Success',
                                   desc: 'Product added to cart successfully',
                                   btnOkOnPress: () {},
-                                  btnOkColor: defaultcolor,
                                   titleTextStyle: GoogleFonts.montserrat(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,

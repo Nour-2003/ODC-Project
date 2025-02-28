@@ -61,6 +61,8 @@ dependencies:
   sizer:
   font_awesome_flutter:
   animate_do:
+  flutter_local_notifications:
+  permission_handler:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -68,7 +70,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
+  flutter_launcher_icons:
+flutter_launcher_icons:
+  android: "launcher_icon"
+  image_path: "Images/logo.jpg"
+  min_sdk_android: 21 # android min sdk min:16, default 21
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
