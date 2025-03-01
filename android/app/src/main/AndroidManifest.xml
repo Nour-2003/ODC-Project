@@ -14,7 +14,7 @@
         </intent>
     </queries>
     <application
-        android:label="odc_project"
+        android:label="SwiftCart"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
