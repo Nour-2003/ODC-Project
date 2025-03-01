@@ -90,4 +90,4 @@ A beautiful and responsive **E-commerce App** built using **Flutter**. This UI d
 Pull requests are welcome! If you'd like to improve the UI or add features, feel free to submit a PR.
 
 ## 📩 Contact
-For any inquiries or collaboration, reach out at **your.email@example.com**
+For any inquiries or collaboration, reach out at **noureldeanh@gmail.com**
